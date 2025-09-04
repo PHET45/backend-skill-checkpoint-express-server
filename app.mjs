@@ -1,5 +1,6 @@
 import express from "express";
 import questionsRouter from "./Routes/question.mjs";
+import answersRouter from "./Routes/answers.mjs";
 
 
 
@@ -8,6 +9,7 @@ const port = 4000;
 
 app.use(express.json());
 app.use("/questions", questionsRouter);
+app.use("/answers", answersRouter)
 
 app.get("/test", (req, res) => {
   return res.json("Server API is working 🚀");
