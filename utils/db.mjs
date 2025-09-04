@@ -1,10 +1,9 @@
 // Create PostgreSQL Connection Pool here !
-import * as pg from "pg";
-const { Pool } = pg.default;
+import { Pool } from "pg";
 
 const connectionPool = new Pool({
   connectionString:
-    "postgresql://your-db-username:your-db-password@localhost:5432/your-db-name",
+    "postgresql://postgres:123456789@localhost:5432/questions",
 });
 
 export default connectionPool;
