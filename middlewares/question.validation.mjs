@@ -14,7 +14,7 @@ export const validateCreateQuestionData = (req, res, next) => {
 };
 
 export const validateCreateAnswersData = (req, res, next) => {
-    if(req.body.content.length > 500){
+    if(req.body.content.length > 300){
         return res.status(400).json({
             massage: "กรุณาส่งตอบคำถามตามที่กำหนดไม่เกิน 500 ตัวอักษร"
         })

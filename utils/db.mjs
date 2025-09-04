@@ -3,7 +3,7 @@ import { Pool } from "pg";
 
 const connectionPool = new Pool({
   connectionString:
-    "postgresql://postgres:123456789@localhost:5432/questions",
+    env.PROSTGRAST_KEY
 });
 
 export default connectionPool;
