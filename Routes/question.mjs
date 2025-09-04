@@ -1,9 +1,11 @@
 import { Router } from "express";
 import connectionPool from "../utils/db.mjs";
+import { validateCreateQuestionData , validateCreateAnswersData} from "../middlewares/question.validation.mjs";
+
 
 const questionsRouter = Router()
 
-questionsRouter.post("/",async(req, res) => {
+questionsRouter.post("/",[validateCreateQuestionData],async(req, res) => {
     const { title, description, category } = req.body || {};
     if (
         typeof title !== "string" || title.trim() === "" ||
@@ -167,7 +169,7 @@ questionsRouter.delete("/:questionId", async(req, res) => {
 
 
 
-questionsRouter.post("/:questionId/answers", async(req, res) => {
+questionsRouter.post("/:questionId/answers", [validateCreateAnswersData],async(req, res) => {
     const questionIdFromClient = req.params.questionId
     const { content } = req.body || {}
 

@@ -58,50 +58,78 @@ http://localhost:4000
 GET http://localhost:4000/test
 
 
-Response:
-
-"Server API is working 🚀"
-
-📌 API Endpoints
-Questions
-Method	Endpoint	Description
-POST	/questions	สร้างคำถามใหม่
-GET	/questions	ดึงคำถามทั้งหมด
-GET	/questions/search?title=xxx&category=yyy	ค้นหาคำถาม
-GET	/questions/:questionId	ดึงคำถามตาม id
-PUT	/questions/:questionId	อัปเดตคำถาม
-DELETE	/questions/:questionId	ลบคำถาม
-Answers
-Method	Endpoint	Description
-POST	/questions/:questionId/answers	เพิ่มคำตอบให้คำถาม
-GET	/questions/:questionId/answers	ดึงคำตอบทั้งหมดของคำถาม
-DELETE	/questions/:questionId/answers	ลบคำตอบทั้งหมดของคำถาม
-Vote (Prototype)
-Method	Endpoint	Description
-POST	/questions/:questionId/vote	โหวตคำถาม (mock endpoint)
-🧪 Example Usage
-Create Question
-POST /questions
-Content-Type: application/json
-
-{
-  "title": "Express.js คืออะไร?",
-  "description": "ช่วยอธิบายการทำงานของ Express.js",
-  "category": "backend"
-}
 
 
-Response:
+📝 Q&A REST API
 
-{ "massage": "Question created successfully." }
+API นี้ถูกพัฒนาด้วย Node.js + Express + PostgreSQL สำหรับสร้างและจัดการคำถาม (Questions) และคำตอบ (Answers)
+เหมาะกับระบบเว็บบอร์ด / ฟอรั่ม / Q&A คล้าย StackOverflow
+
+🚀 Features
+
+สร้าง / อ่าน / อัปเดต / ลบ คำถาม (CRUD Questions)
+
+เพิ่ม / อ่าน / ลบ คำตอบของแต่ละคำถาม (Answers)
+
+ค้นหาคำถามด้วย title และ category
+
+ระบบโหวตสำหรับ Question และ Answer
+
+Validation ตรวจสอบ input (เช่น category ที่กำหนด, ความยาว content ของคำตอบ)
 
 📂 Project Structure
 project-root/
-│── Routes/
-│   ├── question.mjs   # Router สำหรับ Questions + Answers
-│   └── answers.mjs    # Router สำหรับ Answers (แยก)
-│── utils/
-│   └── db.mjs         # PostgreSQL connection pool
-│── index.mjs          # main server file
-│── package.json
-│── README.md
+├── Routes/
+│   ├── question.mjs       # จัดการ Questions และ Answers (บางส่วน)
+│   ├── answers.mjs        # จัดการเฉพาะ Answers เช่น โหวต
+├── middlewares/
+│   ├── question.validation.mjs   # Middleware ตรวจสอบข้อมูล input
+├── utils/
+│   ├── db.mjs             # Database connection (PostgreSQL pool)
+├── server.mjs             # main entrypoint
+
+⚡ API Endpoints
+🔹 Questions
+
+POST /questions → สร้างคำถามใหม่
+
+{
+  "title": "React vs Angular",
+  "description": "Which one is better for large-scale apps?",
+  "category": "Software"
+}
+
+
+GET /questions → ดึงคำถามทั้งหมด
+
+GET /questions/search?title=React&category=Software → ค้นหาคำถาม
+
+GET /questions/:questionId → ดึงคำถามตาม ID
+
+PUT /questions/:questionId → แก้ไขคำถาม
+
+DELETE /questions/:questionId → ลบคำถาม
+
+🔹 Answers
+
+POST /questions/:questionId/answers → สร้างคำตอบ (จำกัด ≤ 500 ตัวอักษร)
+
+GET /questions/:questionId/answers → ดึงคำตอบทั้งหมดของคำถาม
+
+DELETE /questions/:questionId/answers → ลบคำตอบทั้งหมดของคำถาม
+
+🔹 Voting
+
+POST /questions/:questionId/vote → โหวตให้คำถาม
+
+POST /answers/:answerId/vote → โหวตให้คำตอบ
+
+🛡 Validation
+
+Category ของคำถาม ต้องอยู่ในลิสต์
+
+["Software", "Food", "Travel", "Science", "Etc", "Geography"]
+
+
+คำตอบ (content) ต้องไม่เกิน 500 ตัวอักษร
+
